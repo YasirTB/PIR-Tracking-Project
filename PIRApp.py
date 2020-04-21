@@ -2,7 +2,7 @@
 # Login Screen for the user followed by a screen that displays PIR Information
 # User loads a txt file (output from the PIR sensors readings) to the application
 # Movement is then traced on the map provided
-# Author: Yas Tairab 15906553, AUT
+# Its ya boy Yas 15906553 from the A to the U to the T
 
 import sys
 import os
