@@ -1,3 +1,6 @@
+import numpy
+
+
 class Sensor:
     def __init__(self, id):
         self.id = id
@@ -58,18 +61,24 @@ def calculate(arr, tSensors):
             oldTime = newTime
         totalTime += currentElapsedTime # Adding current time duration to the total time duration
         reading = line[1:7] # Slicing the data for the sensor readings into a new list
-        order = []
+        order = ''
         for index, input in enumerate(reading): #Iterates through the 6 sensor readings
             if float(input) < 1.7 or float(input) > 2.5: # If the reading is below 1.7 or above 2.5, the sensor reads that the user is active
                 tSensors[index - 1].updateFreq()
                 tSensors[index - 1].updateTime(currentElapsedTime) # Accumulating the time spent in the sensor
-                order.append(index)
-        if len(order) > 0:
+                if len(order) == 0:
+                    order += str(index)
+                else:
+                    order += '_' + str(index)
+
+        if len(order) == 1:
+            fullOrder.append(order)
+            activeTime += currentElapsedTime
+        elif len(order) > 1:
             fullOrder.append(order)
             activeTime += currentElapsedTime
         else:
             fullOrder.append(fullOrder[len(fullOrder)-1])
-            #fullOrder.append('N')
             idle += currentElapsedTime
     print(activeTime,idle,activeTime+idle)
     return activeTime, totalTime, fullOrder
@@ -90,6 +99,42 @@ def summary(sensors):
         totalFreq+=i.frequency
     return totalFreq
 
+
+def testOrder(order):
+    for i in order:
+        tkn = i.split('_')
+        if len(tkn) == 1:
+            if '0' in tkn:
+                print('z0')
+            elif '1' in tkn:
+                print('z1')
+            elif '2' in tkn:
+                print('z2')
+            elif '3' in tkn:
+                print('z3')
+            elif '4' in tkn:
+                print('z4')
+            elif '5' in tkn:
+                print('z5')
+            else:
+                print('O')
+        else:
+            #run combination
+            if '0' in tkn:
+                print('z0')
+            elif '1' in tkn and '2' in tkn:
+                print('z12')
+            elif '2' in tkn and '3' in tkn:
+                print('z23')
+            elif '3' in tkn and '4' in tkn:
+                print('z34')
+            elif '4' in tkn and '5' in tkn:
+                print('z45')
+            elif '5' in tkn and '1' in tkn:
+                print('z51')
+
+
+
 def main():
     preArray = preprocess("C:/Users/Miguel/OneDrive/AUT/Final Year Project/data/test_inner_outer.txt")
     Sensors = initSensors()
@@ -99,7 +144,8 @@ def main():
     tFreq = summary(Sensors)
     for i in Sensors:
         print('Sensor',i.id,round((i.frequency/tFreq)*100,2), '%')
-    print(fullOrder)
 
+    print(fullOrder)
+    testOrder(fullOrder)
 
 main()
