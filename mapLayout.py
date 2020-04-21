@@ -33,7 +33,6 @@ def resetMap():
     canvas.itemconfig(zn51, fill='white')
 
 def update(tkn):
-    time.sleep(0.1)
     if len(tkn) == 1:
         if '0' in tkn:
             canvas.itemconfig(zn0, fill='red')
@@ -70,10 +69,7 @@ def task():
         resetMap()
         tkn = i.split('_')
         update(tkn)
-
-
-
-
+        time.sleep(0.1)
 
 task()
 
