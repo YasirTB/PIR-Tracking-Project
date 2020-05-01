@@ -70,7 +70,6 @@ def calculate(arr, tSensors):
                     order += str(index)
                 else:
                     order += '_' + str(index)
-
         if len(order) == 1:
             fullOrder.append(order)
             activeTime += currentElapsedTime
@@ -100,43 +99,43 @@ def summary(sensors):
     return totalFreq
 
 
-# def testOrder(order):
-#     for i in order:
-#         tkn = i.split('_')
-#         if len(tkn) == 1:
-#             if '0' in tkn:
-#                 print('z0')
-#             elif '1' in tkn:
-#                 print('z1')
-#             elif '2' in tkn:
-#                 print('z2')
-#             elif '3' in tkn:
-#                 print('z3')
-#             elif '4' in tkn:
-#                 print('z4')
-#             elif '5' in tkn:
-#                 print('z5')
-#             else:
-#                 print('O')
-#         else:
-#             #run combination
-#             if '0' in tkn:
-#                 print('z0')
-#             elif '1' in tkn and '2' in tkn:
-#                 print('z12')
-#             elif '2' in tkn and '3' in tkn:
-#                 print('z23')
-#             elif '3' in tkn and '4' in tkn:
-#                 print('z34')
-#             elif '4' in tkn and '5' in tkn:
-#                 print('z45')
-#             elif '5' in tkn and '1' in tkn:
-#                 print('z51')
+def testOrder(order):
+    for i in order:
+        tkn = i.split('_')
+        if len(tkn) == 1:
+            if '0' in tkn:
+                print('z0')
+            elif '1' in tkn:
+                print('z1')
+            elif '2' in tkn:
+                print('z2')
+            elif '3' in tkn:
+                print('z3')
+            elif '4' in tkn:
+                print('z4')
+            elif '5' in tkn:
+                print('z5')
+            else:
+                print('O')
+        else:
+            #run combination
+            if '0' in tkn:
+                print('z0')
+            elif '1' in tkn and '2' in tkn:
+                print('z12')
+            elif '2' in tkn and '3' in tkn:
+                print('z23')
+            elif '3' in tkn and '4' in tkn:
+                print('z34')
+            elif '4' in tkn and '5' in tkn:
+                print('z45')
+            elif '5' in tkn and '1' in tkn:
+                print('z51')
 
 
 
 def main():
-    preArray = preprocess("C:/Users/Miguel/OneDrive/AUT/Final Year Project/data/test_inner_outer.txt")
+    preArray = preprocess("C:/Users/Miguel/OneDrive/AUT/Final Year Project/data/tommy_inout.txt")
     Sensors = initSensors()
     active, total, fullOrder = calculate(preArray, Sensors)
     print('The user has been active for', round(active, 2), 'seconds within a time duration of', round(total, 2),
@@ -146,6 +145,5 @@ def main():
         print('Sensor',i.id,round((i.frequency/tFreq)*100,2), '%')
 
     print(fullOrder)
-#     testOrder(fullOrder)
 
 main()
