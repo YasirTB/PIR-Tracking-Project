@@ -6,18 +6,43 @@ cHeight = 650
 canvas = Canvas(root, width=cWidth, height=cHeight)
 canvas.pack()
 
-zn1 = canvas.create_polygon(257, 635, 319, 445, 269, 409, 107, 526,outline='blue',fill='white',tag='z1',)
-zn12 = canvas.create_polygon(107, 526, 269, 409, 250, 350, 50, 350,outline='black',fill='white', tag='z1_2')
-zn2 = canvas.create_polygon(50, 350, 250, 350, 269, 291, 107, 174,outline='purple',fill='white', tag='z2')
-zn23 = canvas.create_polygon(107, 174, 269, 291, 319, 255, 257, 65,outline='black',fill='white', tag='z2_3')
-zn3 = canvas.create_polygon(257, 65, 443, 65, 381, 255, 319, 255,outline='orange',fill='white', tag='z3')
-zn34 = canvas.create_polygon(443, 65, 381, 255, 431, 291, 593, 174,outline='black',fill='white', tag='z3_4')
-zn4 = canvas.create_polygon(593, 174, 431, 291, 450, 350, 650, 350,outline='cyan',fill='white', tag='z4')
-zn45 = canvas.create_polygon(650, 350, 450, 350, 431, 409, 593, 526,outline='black',fill='white', tag='z4_5')
-zn5 = canvas.create_polygon(593, 526, 431, 409, 381, 445, 443, 635,outline='green',fill='white', tag='z5')
-zn51 = canvas.create_polygon(443, 635, 381, 445, 319, 445, 257, 635,outline='black',fill='white', tag='z5_1')
-zn0 = canvas.create_polygon(381, 255, 319, 255, 269, 291, 250, 350, 269, 409, 319, 445, 381, 445, 431, 409, 450, 350,
-                            431, 291,outline='black',fill='white', tag='z0')
+zn1 = canvas.create_polygon(276,578,325,426,285,397,156,491,outline='black',fill='white', tag='z1')
+zn12 = canvas.create_polygon(285,397,270,350,110,350,156,491,outline='black',fill='white', tag='z1_2')
+zn2 = canvas.create_polygon(110,350,270,350,285,303,156,209,outline='black',fill='white', tag='z2')
+zn23 = canvas.create_polygon(285,303,325,274,276,122,156,209,outline='black',fill='white',tag='z2_3',)
+zn3 = canvas.create_polygon(424,122,276,122,325,274,375,274,outline='black',fill='white', tag='z3')
+zn34 = canvas.create_polygon(424,122,375,274,415,303,544,209,outline='black',fill='white', tag='z3_4')
+zn4 = canvas.create_polygon(544,209,415,303,430,350,590,350,outline='black',fill='white', tag='z4')
+zn45 = canvas.create_polygon(590,350,430,350,415,397,544,491,outline='black',fill='white', tag='z4_5')
+zn5 = canvas.create_polygon(544,491,415,397,375,426,424,578,outline='black',fill='white', tag='z5')
+zn51 = canvas.create_polygon(424,578,375,426,325,426,276,578,outline='black',fill='white', tag='z5_1')
+zn0 = canvas.create_polygon(375,274,325,274,285,303,270,350,285,397,325,426,375,426,415,397,430,350,415,303,outline='orange',fill='white', tag='z0')
+
+
+# Zone labels
+zn0_label = Label(canvas, text='Zone 0', fg='black', bg='white')
+zn1_label = Label(canvas, text='Zone 1', fg='black', bg='white')
+zn12_label = Label(canvas, text='Zone 1&2', fg='black', bg='white')
+zn2_label = Label(canvas, text='Zone 2', fg='black', bg='white')
+zn23_label = Label(canvas, text='Zone 2&3', fg='black', bg='white')
+zn3_label = Label(canvas, text='Zone 3', fg='black', bg='white')
+zn34_label = Label(canvas, text='Zone 3&4', fg='black', bg='white')
+zn4_label = Label(canvas, text='Zone 4', fg='black', bg='white')
+zn45_label = Label(canvas, text='Zone 4&5', fg='black', bg='white')
+zn5_label = Label(canvas, text='Zone 5', fg='black', bg='white')
+zn51_label = Label(canvas, text='Zone 5&1', fg='black', bg='white')
+
+canvas.create_window(350,350, window=zn0_label)
+canvas.create_window(200, 400, window=zn1_label)
+canvas.create_window(200, 310, window=zn12_label)
+canvas.create_window(250, 225, window=zn2_label)
+canvas.create_window(350, 200, window=zn23_label)
+canvas.create_window(450, 225, window=zn3_label)
+canvas.create_window(500, 310, window=zn34_label)
+canvas.create_window(500, 400, window=zn4_label)
+canvas.create_window(450, 475, window=zn45_label)
+canvas.create_window(350, 500, window=zn5_label)
+canvas.create_window(250, 475, window=zn51_label)
 
 L= ['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5',
         '5', '5', '1_5', '1_5', '5', '5', '5', '5', '5', '5', '5', '5', '1', '1', '1', '1', '1', '1', '1_5', '5', '1',
@@ -86,7 +111,7 @@ def task(i):
     resetMap()
     tkn = L[i].split('_')
     update(tkn)
-    root.update()
+    #root.update()
     root.after(100,task,i+1) # call this function per 0.1 second
 
 root.after(100,task,index) # call after function and pass a index argument
