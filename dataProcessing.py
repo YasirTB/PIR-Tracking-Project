@@ -69,7 +69,7 @@ def calculate(arr, tSensors):
                 if len(order) == 0:
                     order += str(index)
                 else:
-                    order += '_' + str(index)
+                    order += ',' + str(index)
         if len(order) == 1:
             fullOrder.append(order)
             activeTime += currentElapsedTime
@@ -101,7 +101,7 @@ def summary(sensors):
 
 def testOrder(order):
     for i in order:
-        tkn = i.split('_')
+        tkn = i.split(',')
         if len(tkn) == 1:
             if '0' in tkn:
                 print('z0')
