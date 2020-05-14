@@ -134,8 +134,8 @@ def main():
     print(preArray, g1, g2)
 
     ##Filtered
-    filtSen = initSensors()
-    filtData = filterData(preArray,10)
+    filtSen = initSensors()#instantiates 6 "new" Sensors
+    filtData = filterData(preArray,10)#last 10 sec of the data
     #filtStats
     calculate(filtData,filtSen)
     d1, d2 = sensorStats(filtSen)
