@@ -1,6 +1,5 @@
 import numpy
 
-
 class Sensor:
     def __init__(self, id):
         self.id = id
@@ -36,9 +35,35 @@ def preprocess(fileName):
     for line in lines:
         df_result.loc[i] = line
         i = i + 1
-    print(df_result)
+   # print(df_result)
     return df_result
 
+def filterData(tSensors, num):
+    #from the original dataframe, slice the dataframe into a new dataframe
+    #num is the user input in sec, e.g last 10,20,30 sec
+    #It takes 10 lines of output for 1 sec
+
+    #eg old df = 30sec=300lines
+    #user wants to see the last 10 sec
+    # 10 lines * 10 secs = 100 lines
+    #range is 200 to 300 the (last 10 sec)
+    # copy the last 100 lines of the old dataframe into a new dataframe
+    lastIndex = len(tSensors)
+    firstIndex= lastIndex - (num*10)
+    filteredArr = tSensors.copy() #Slice the dataframe
+    filteredArr=filteredArr.iloc[firstIndex:lastIndex,:]
+    return filteredArr
+
+def sensorStats(tSensors):
+    #tSensors is an array list of the 6 sensors
+    #function will give two array list, time duration and sensor freq for every sensor
+    #useful for graphs
+    timePerSen = []
+    readPerSen = []
+    for i in tSensors:
+        timePerSen.append(i.elapsedTime)
+        readPerSen.append(i.frequency)
+    return timePerSen,readPerSen
 
 def calculate(arr, tSensors):
     from datetime import datetime
@@ -82,68 +107,39 @@ def calculate(arr, tSensors):
     print(activeTime,idle,activeTime+idle)
     return activeTime, totalTime, fullOrder
 
-
 def initSensors():
     tSensors = []
     for i in range(6):  # Instantiating 6 sensor objects
         tSensors.append(Sensor(i))
     return tSensors
 
-
 def summary(sensors):
     totalFreq = 0
     for i in sensors:
         print('The user has been in zone', round(i.frequency, 2), 'times for', round(i.elapsedTime, 2),
               'seconds.')
-        totalFreq+=i.frequency
+        totalFreq += i.frequency
     return totalFreq
-
-
-def testOrder(order):
-    for i in order:
-        tkn = i.split(',')
-        if len(tkn) == 1:
-            if '0' in tkn:
-                print('z0')
-            elif '1' in tkn:
-                print('z1')
-            elif '2' in tkn:
-                print('z2')
-            elif '3' in tkn:
-                print('z3')
-            elif '4' in tkn:
-                print('z4')
-            elif '5' in tkn:
-                print('z5')
-            else:
-                print('O')
-        else:
-            #run combination
-            if '0' in tkn:
-                print('z0')
-            elif '1' in tkn and '2' in tkn:
-                print('z12')
-            elif '2' in tkn and '3' in tkn:
-                print('z23')
-            elif '3' in tkn and '4' in tkn:
-                print('z34')
-            elif '4' in tkn and '5' in tkn:
-                print('z45')
-            elif '5' in tkn and '1' in tkn:
-                print('z51')
-
-
 
 def main():
     preArray = preprocess("C:/Users/Miguel/OneDrive/AUT/Final Year Project/data/tommy_inout.txt")
     Sensors = initSensors()
     active, total, fullOrder = calculate(preArray, Sensors)
-    print('The user has been active for', round(active, 2), 'seconds within a time duration of', round(total, 2),
-          'seconds')
-    tFreq = summary(Sensors)
-    for i in Sensors:
-        print('Sensor',i.id,round((i.frequency/tFreq)*100,2), '%')
+    # print('The user has been active for', round(active, 2), 'seconds within a time duration of', round(total, 2),
+    #       'seconds')
+    # tFreq = summary(Sensors)
+    # for i in Sensors:
+    #     print('Sensor',i.id,round((i.frequency/tFreq)*100,2), '%', i.elapsedTime,'sec',i.frequency,'times')
+    g1,g2 = sensorStats(Sensors)
+    print(preArray, g1, g2)
 
-    print(fullOrder)
+    ##Filtered
+    filtSen = initSensors()
+    filtData = filterData(preArray,10)
+    #filtStats
+    calculate(filtData,filtSen)
+    d1, d2 = sensorStats(filtSen)
+    print(filtData,d1,d2)
+
 
 main()
