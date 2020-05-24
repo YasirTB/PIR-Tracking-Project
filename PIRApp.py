@@ -3,7 +3,7 @@
 # User loads a txt file (output from the PIR sensors readings) to the application
 # Movement is then traced on the map provided
 # Supporting Statistics are also outlined
-import tkinter
+
 from tkinter import *
 from tkinter import filedialog, ttk
 import sys
