@@ -2,8 +2,8 @@
 # Login Screen for the user followed by a screen that displays PIR Information
 # User loads a txt file (output from the PIR sensors readings) to the application
 # Movement is then traced on the map provided
-# Its ya boy Yas 15906553 from the A to the U to the T
-
+# Supporting Statistics are also outlined
+import tkinter
 from tkinter import *
 from tkinter import filedialog, ttk
 import sys
@@ -23,9 +23,10 @@ def cancel():
 
 
 def addfile():
-    root.filename = filedialog.askopenfilename(initialdir="/", title="Select File",
-                                               filetypes=(("Text Files", "*.txt"), ("All files", "*.*")))
-    label = Label(tabFrame1, text=root.filename).pack()
+    global filename
+    filename = filedialog.askopenfilename(initialdir="/", title="Select File",
+                                          filetypes=(("Text Files", "*.txt"), ("All files", "*.*")))
+    label = Label(tabFrame1, text=filename).pack()
 
 
 def resetMap():
@@ -117,15 +118,46 @@ def select():
     selectTabs.select(1)
 
 
+def runFile():
+    from dataProcessing import preprocess
+
+
+def plotBar(timeData, readData):
+    import tkinter as tk
+    from pandas import DataFrame
+    import matplotlib.pyplot as plt
+    from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+    dTime = {'Sensor': ['0', '1', '2', '3', '4', '5'], 'Duration': timeData}
+    dRead = {'Sensor': ['0', '1', '2', '3', '4', '5'], 'Count': readData}
+
+    timeDF = DataFrame(dTime, columns=['Sensor', 'Duration'])
+    readDF = DataFrame(dRead, columns=['Sensor', 'Count'])
+
+    figure1 = plt.Figure(figsize=(6, 5), dpi=100)
+    ax1 = figure1.add_subplot(111)
+    bar1 = FigureCanvasTkAgg(figure1, root)
+    bar1.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH)
+    timeDF = timeDF[['Sensor', 'Duration']].groupby('Sensor').sum()
+    timeDF.plot(kind='bar', legend=True, ax=ax1)
+    ax1.set_title('Time spent by the user on each zone')
+
+    figure2 = plt.Figure(figsize=(6, 5), dpi=100)
+    ax2 = figure2.add_subplot(111)
+    bar2 = FigureCanvasTkAgg(figure2, root)
+    bar2.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH)
+    readDF = readDF[['Sensor', 'Count']].groupby('Sensor').sum()
+    readDF.plot(kind='bar', legend=True, ax=ax2)
+    ax2.set_title('Sensor read')
+
+
 # Main Screen
 root = Tk()
-
-# Frame for the main screen
-# frame = LabelFrame(root, padx=5, pady=5)
 
 # Create Tabs in App
 selectTabs = ttk.Notebook()
 
+# Setting up the Frames on the main screen
 tabFrame1 = Frame(selectTabs, width=800, height=750, bg="white")
 tabFrame2 = Frame(selectTabs, width=800, height=750, bg="white")
 
@@ -135,9 +167,13 @@ tabFrame2.pack(fill="both", expand=1)
 selectTabs.add(tabFrame1, text="Map Layout")
 selectTabs.add(tabFrame2, text="Statistics")
 
+# Frame for the Map
+mapFrame = Frame(tabFrame1, height=800, width=750, borderwidth=1)
+statsFrame = Frame(tabFrame2, height=800, width=750, borderwidth=1)
+
 # Buttons on the tab 1
-openFile = Button(tabFrame1, text="Open File", font=('Roboto', 10), command=addfile)
-run = Button(tabFrame1, text="Execute", font=('Roboto', 10))
+openFile = Button(tabFrame1, text="Open File", font=('Helvetica', 10), command=addfile)
+run = Button(tabFrame1, text="Execute", font=('Helvetica', 10), command=runFile)
 
 # Navigate to the Stat Tab
 navigateStat = Button(tabFrame1, text="Show Stats", command=select)
@@ -148,9 +184,9 @@ clicked.set("Select Time Unit")
 hSlider = Scale(tabFrame2, from_=0, to=120, orient=HORIZONTAL)
 dropMenu = OptionMenu(tabFrame2, clicked, "Hours", "Minutes", "Seconds")
 
-cWidth = 800
-cHeight = 650
-canvas = Canvas(tabFrame1, width=cWidth, height=cHeight)
+cWidth = 660
+cHeight = 600
+canvas = Canvas(mapFrame, width=cWidth, height=cHeight)
 
 # Outer Zones
 zn1 = canvas.create_polygon(276, 578, 325, 426, 285, 397, 156, 491, outline='black', fill='white', tag='z1')
@@ -240,18 +276,18 @@ lbl2.pack()
 entry2.pack()
 button2.pack()
 lbl3.pack()
-# frame.pack(padx=10, pady=10)
 selectTabs.pack()
+mapFrame.pack()
 hSlider.pack()
 dropMenu.pack()
 canvas.pack()
 openFile.pack()
 run.pack()
-navigateStat.pack(pady=10)
+navigateStat.pack()
 
 root.title('main screen')
 root.configure(background='white')
-root.geometry('800x800')
+root.geometry('660x720')
 root.withdraw()
 
 root.mainloop()
