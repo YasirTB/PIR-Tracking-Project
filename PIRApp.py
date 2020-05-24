@@ -3,12 +3,11 @@
 # User loads a txt file (output from the PIR sensors readings) to the application
 # Movement is then traced on the map provided
 # Supporting Statistics are also outlined
-
+import finalGraphStats
 from tkinter import *
 from tkinter import filedialog, ttk
 import sys
 import time
-
 
 def login(event):
     if entry1.get() == 'aut' and entry2.get() == 'pass':
@@ -26,6 +25,7 @@ def addfile():
     global filename
     filename = filedialog.askopenfilename(initialdir="/", title="Select File",
                                           filetypes=(("Text Files", "*.txt"), ("All files", "*.*")))
+
     label = Label(tabFrame1, text=filename).pack()
 
 
@@ -119,37 +119,31 @@ def select():
 
 
 def runFile():
-    from dataProcessing import preprocess
-
-
-def plotBar(timeData, readData):
-    import tkinter as tk
+    global sensorDF
+    global tSensors
+    global fullOrder
+    global timeData
+    global readData
+    import finalDataProcess as dp
+    tSensors = dp.initSensors()
+    sensorDF = dp.preprocess(filename)
+    fullOrder = dp.calculate(sensorDF,tSensors)
+    timeData, readData = dp.sensorStats(tSensors)
+    runStats()
+    
+def runStats():
     from pandas import DataFrame
-    import matplotlib.pyplot as plt
-    from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-
+    
+    # Creating dataframes for the readings and time data
     dTime = {'Sensor': ['0', '1', '2', '3', '4', '5'], 'Duration': timeData}
     dRead = {'Sensor': ['0', '1', '2', '3', '4', '5'], 'Count': readData}
 
     timeDF = DataFrame(dTime, columns=['Sensor', 'Duration'])
     readDF = DataFrame(dRead, columns=['Sensor', 'Count'])
-
-    figure1 = plt.Figure(figsize=(6, 5), dpi=100)
-    ax1 = figure1.add_subplot(111)
-    bar1 = FigureCanvasTkAgg(figure1, root)
-    bar1.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH)
     timeDF = timeDF[['Sensor', 'Duration']].groupby('Sensor').sum()
     timeDF.plot(kind='bar', legend=True, ax=ax1)
-    ax1.set_title('Time spent by the user on each zone')
-
-    figure2 = plt.Figure(figsize=(6, 5), dpi=100)
-    ax2 = figure2.add_subplot(111)
-    bar2 = FigureCanvasTkAgg(figure2, root)
-    bar2.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH)
     readDF = readDF[['Sensor', 'Count']].groupby('Sensor').sum()
     readDF.plot(kind='bar', legend=True, ax=ax2)
-    ax2.set_title('Sensor read')
-
 
 # Main Screen
 root = Tk()
@@ -181,7 +175,7 @@ navigateStat = Button(tabFrame1, text="Show Stats", command=select)
 clicked = StringVar()
 clicked.set("Select Time Unit")
 
-hSlider = Scale(tabFrame2, from_=0, to=120, orient=HORIZONTAL)
+hSlider = Scale(tabFrame2, from_= 0, to=120, orient=HORIZONTAL)
 dropMenu = OptionMenu(tabFrame2, clicked, "Hours", "Minutes", "Seconds")
 
 cWidth = 660
@@ -252,6 +246,27 @@ L = ['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', '5', '5', '5', 
      '4_5', '4', '4', '4', '4', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5',
      '5', '5', '1']
 
+
+
+###STATS
+import tkinter as tk
+import matplotlib.pyplot as plt
+from pandas import DataFrame
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+
+figure1 = plt.Figure(figsize=(4, 4), dpi=75)
+ax1 = figure1.add_subplot(111)
+bar1 = FigureCanvasTkAgg(figure1, statsFrame)
+bar1.get_tk_widget().pack(side = tk.LEFT,fill = tk.BOTH)
+ax1.set_title('Time spent by the user on each zone')
+
+figure2 = plt.Figure(figsize=(4, 4), dpi=75)
+ax2 = figure2.add_subplot(111)
+bar2 = FigureCanvasTkAgg(figure2, statsFrame)
+bar2.get_tk_widget().pack(side = tk.RIGHT,fill = tk.BOTH)
+ax2.set_title('Sensor read')
+
 # Login Screen Config
 top = Toplevel()
 top.geometry('300x360')
@@ -278,6 +293,7 @@ button2.pack()
 lbl3.pack()
 selectTabs.pack()
 mapFrame.pack()
+statsFrame.pack()
 hSlider.pack()
 dropMenu.pack()
 canvas.pack()
