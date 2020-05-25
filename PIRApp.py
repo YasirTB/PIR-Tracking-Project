@@ -3,15 +3,19 @@
 # User loads a txt file (output from the PIR sensors readings) to the application
 # Movement is then traced on the map provided
 # Supporting Statistics are also outlined
+
+
 from tkinter import *
 from tkinter import filedialog, ttk
 import sys
 import time
 
+
 def login(event):
     if entry1.get() == 'aut' and entry2.get() == 'pass':
         root.deiconify()
         top.destroy()
+
 
 def cancel():
     top.destroy()
@@ -23,7 +27,9 @@ def addfile():
     global filename
     filename = filedialog.askopenfilename(initialdir="/", title="Select File",
                                           filetypes=(("Text Files", "*.txt"), ("All files", "*.*")))
-    label = Label(tabFrame1, text=filename).pack()
+
+    label = Label(tabFrame1, text=filename).grid()
+
 
 def resetMap():
     canvas.itemconfig(zn1, fill='white')
@@ -47,6 +53,7 @@ def resetMap():
     canvas.itemconfig(zn45I, fill='white')
     canvas.itemconfig(zn5I, fill='white')
     canvas.itemconfig(zn51I, fill='white')
+
 
 def update(tkn, colour):
     if len(tkn) == 1:
@@ -94,25 +101,42 @@ def update(tkn, colour):
             elif '5' in tkn and '1' in tkn:
                 canvas.itemconfig(zn51I, outline='black', fill=colour)
 
+
+index = 0
+
+
+def task(i):
+    if i == len(L):  # check whether the index larger than the length of the list.
+        return
+    resetMap()
+    tkn = L[i].split('_')
+    update(tkn)
+    root.update()
+    root.after(100, task, i + 1)  # call this function per 0.1 second
+    root.after(100, task, index)  # call after function and pass a index argument
+
+
 def select():
     selectTabs.select(1)
 
+
 def runFile():
     import finalDataProcess as dp
-    global sensorDF,timeData,readData,fullOrder
+    global sensorDF, timeData, readData, fullOrder
     tSensors = dp.initSensors()
     sensorDF = dp.preprocess(filename)
-    fullOrder = dp.calculate(sensorDF,tSensors)
+    fullOrder = dp.calculate(sensorDF, tSensors)
     timeData, readData = dp.sensorStats(tSensors)
-    plotBar(timeData,readData)
+    plotBar(timeData, readData)
 
-def plotBar(timeD,readD):
+
+def plotBar(timeD, readD):
     import tkinter as tk
     import matplotlib.pyplot as plt
     from pandas import DataFrame
     from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-    #Clear the graphs before plotting a new one
+    # Clear the graphs before plotting a new one
     for widget in statsFrame.winfo_children():
         widget.destroy()
 
@@ -140,24 +164,29 @@ def plotBar(timeD,readD):
     readDF = readDF[['Sensor', 'Count']].groupby('Sensor').sum()
     readDF.plot(kind='bar', legend=True, ax=axR)
 
+
 def filtGraph():
     import finalDataProcess as dP
     fSensors = dP.initSensors()
-    filtDF = dP.filterData(sensorDF,int(fNum),fType)
+    filtDF = dP.filterData(sensorDF, int(fNum), fType)
     dP.calculate(filtDF, fSensors)
     timeData, readData = dP.sensorStats(fSensors)
     plotBar(timeData, readData)
+
 
 def getNum(varNum):
     global fNum
     fNum = varNum
 
+
 def getType(varType):
     global fType
     fType = varType
 
+
 def resetGraph():
     plotBar(timeData, readData)
+
 
 def runMap():
     for i in range(len(fullOrder)):
@@ -167,15 +196,20 @@ def runMap():
         canvas.update()
     resetMap()
 
+
 def subRun(i):
     tkn = fullOrder[i].split(',')
     canvas.after(100, update(tkn, 'red'))
+
+
 def mapDelay(i):
     tknDelay2 = fullOrder[i - 1].split(',')
     tknDelay3 = fullOrder[i - 2].split(',')
 
     canvas.after(5, update(tknDelay2, 'red2'))
     canvas.after(10, update(tknDelay3, 'red3'))
+
+
 # Main Screen
 root = Tk()
 
@@ -199,7 +233,7 @@ statsFrame = Frame(tabFrame2, height=800, width=750, borderwidth=1)
 # Buttons on the tab 1
 openFile = Button(tabFrame1, text="Open File", font=('Helvetica', 10), command=addfile)
 run = Button(tabFrame1, text="Execute", font=('Helvetica', 10), command=runFile)
-playButton = Button(tabFrame1, text="Play", font=('Helvetica', 10), command = runMap)
+playButton = Button(tabFrame1, text="Play", font=('Helvetica', 10), command=runMap)
 stopButton = Button(tabFrame1, text="Stop", font=('Helvetica', 10), command=resetMap)
 
 # Navigate to the Stat Tab
@@ -208,15 +242,14 @@ navigateStat = Button(tabFrame1, text="Show Stats", command=select)
 clicked = StringVar()
 clicked.set("Select Time Unit")
 
-hSlider = Scale(tabFrame2, from_= 0, to=60, orient=HORIZONTAL,command = getNum)
+hSlider = Scale(tabFrame2, from_=0, to=60, orient=HORIZONTAL, command=getNum)
 dropMenu = OptionMenu(tabFrame2, clicked, "Hours", "Minutes", "Seconds", command=getType)
 
-filterButton = Button(tabFrame2, text = 'Filter',command = filtGraph)
-resetGButton = Button(tabFrame2, text = 'Reset',command = resetGraph)
+filterButton = Button(tabFrame2, text='Filter', command=filtGraph)
+resetGButton = Button(tabFrame2, text='Reset', command=resetGraph)
 
 cWidth = 660
 cHeight = 600
-global canvas
 canvas = Canvas(mapFrame, width=cWidth, height=cHeight)
 
 # Outer Zones
@@ -266,10 +299,28 @@ canvas.create_window(450, 475, window=zn45_label)
 canvas.create_window(350, 500, window=zn5_label)
 canvas.create_window(250, 475, window=zn51_label)
 
-###STATS
+L = ['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5',
+     '5', '5', '1_5', '1_5', '5', '5', '5', '5', '5', '5', '5', '5', '1', '1', '1', '1', '1', '1', '1_5', '5', '1',
+     '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1_2', '2', '1_2', '0_1', '0_1', '0_1', '0_1', '1', '1',
+     '0_1', '0', '0_1_2', '1_2', '1', '1_2', '2', '2', '2', '2', '2', '2', '2', '1', '1', '2', '2', '2', '2_3',
+     '2_3', '0_2_3', '0_2', '0_2', '0_2', '2', '2', '2', '2_3', '3', '2_3', '2', '2_3', '2_3_4', '3_4', '3', '3',
+     '3_4', '3_4', '2_3_4', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3',
+     '3', '4', '3', '3', '3_4', '4', '4', '4', '4', '3_4', '4', '4', '0_3_4', '3_4', '3', '3', '3', '3', '0', '4',
+     '0_4', '4', '4', '5', '4', '4', '4', '4', '4_5', '4_5', '4_5', '4_5', '5', '5', '5', '5', '5', '5', '0_5',
+     '0_5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5',
+     '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5',
+     '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '1_5', '5', '5', '5', '1',
+     '1_5', '0_5', '0', '0', '0', '0_1_5', '0_5', '0_5', '0_1', '0_1', '0', '1', '1_2', '0_2', '0_1', '0_1', '0_1',
+     '2', '1_2', '1', '0_1_2', '0_1_2', '0_1_2', '1_3', '3', '0', '0_2', '2', '2', '0', '0_2', '2', '2', '0_3',
+     '0_3', '0_3', '0', '0', '0', '0', '0', '3_4', '0_3_4', '0_3_4', '0', '0', '4', '5', '5', '0', '4_5', '4_5',
+     '4_5', '4', '4', '4', '4', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5',
+     '5', '5', '1']
+
+# Stats
 import tkinter as tk
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
 timeFig = plt.Figure(figsize=(4, 4), dpi=75)
 readFig = plt.Figure(figsize=(4, 4), dpi=75)
 axT = timeFig.add_subplot(111)
@@ -282,11 +333,9 @@ barR = FigureCanvasTkAgg(readFig, statsFrame)
 barR.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH)
 axR.set_title('Sensor read')
 
-
-
 # Login Screen Config
 top = Toplevel()
-top.geometry('300x360')
+top.geometry('270x360')
 top.title('User Login')
 top.configure(background='white')
 photo2 = PhotoImage(file='autlogo.png')
@@ -295,35 +344,38 @@ lbl1 = Label(top, text='Username:', font={'Helvetica', 10})
 entry1 = Entry(top)
 lbl2 = Label(top, text='Password:', font={'Helvetica', 10})
 entry2 = Entry(top, show="*")
+button3 = Button(top, text='login', command=lambda: login(clicked))
 button2 = Button(top, text='cancel', command=lambda: cancel())
-lbl3 = Label(top, text='Copyright AUT 2020 ya bish', font=('Arial', 9))
+lbl3 = Label(top, text='Copyright AUT 2020', font=('Arial', 9))
 
 entry2.bind('<Return>', login)
 
 # Ordering the elements
-photo.pack()
-lbl1.pack()
-entry1.pack()
-lbl2.pack()
-entry2.pack()
-button2.pack()
-lbl3.pack()
-selectTabs.pack()
-mapFrame.pack()
-statsFrame.pack()
-hSlider.pack()
-dropMenu.pack()
-canvas.pack()
-openFile.pack()
-run.pack()
-# navigateStat.pack()
-filterButton.pack()
-resetGButton.pack()
-playButton.pack()
-# stopButton.pack()
-root.title('main screen')
+photo.grid()
+lbl1.grid(ipadx=4)
+entry1.grid()
+lbl2.grid()
+entry2.grid()
+button3.grid(row=5, ipadx=14)
+button2.grid(row=6, ipadx=10)
+lbl3.grid()
+selectTabs.grid()
+mapFrame.grid()
+statsFrame.grid()
+hSlider.grid()
+dropMenu.grid()
+canvas.grid()
+openFile.grid(row=1, column=0, sticky="w")
+run.grid(row=1)
+navigateStat.grid(row=1, sticky="e")
+filterButton.grid()
+resetGButton.grid()
+playButton.grid()
+stopButton.grid()
+
+root.title('PIR Application')
 root.configure(background='white')
-root.geometry('660x720')
+root.geometry('670x720')
 root.withdraw()
 
 root.mainloop()
