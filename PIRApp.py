@@ -116,8 +116,14 @@ def task(i):
     root.after(100, task, index)  # call after function and pass a index argument
 
 
-def select():
+def selectMapTab():
+    selectTabs.select(0)
+    root.geometry('670x720')
+
+
+def selectStatsTab():
     selectTabs.select(1)
+    root.geometry('610x500')
 
 
 def runFile():
@@ -237,16 +243,16 @@ playButton = Button(tabFrame1, text="Play", font=('Helvetica', 10), command=runM
 stopButton = Button(tabFrame1, text="Stop", font=('Helvetica', 10), command=resetMap)
 
 # Navigate to the Stat Tab
-navigateStat = Button(tabFrame1, text="Show Stats", command=select)
+navigateStat = Button(tabFrame1, text="Show Stats", command=selectStatsTab)
 
+# Buttons on the tab 2
 clicked = StringVar()
 clicked.set("Select Time Unit")
-
 hSlider = Scale(tabFrame2, from_=0, to=60, orient=HORIZONTAL, command=getNum)
 dropMenu = OptionMenu(tabFrame2, clicked, "Hours", "Minutes", "Seconds", command=getType)
-
 filterButton = Button(tabFrame2, text='Filter', command=filtGraph)
 resetGButton = Button(tabFrame2, text='Reset', command=resetGraph)
+navigateMap = Button(tabFrame2, text="Return to Map", command=selectMapTab)
 
 cWidth = 660
 cHeight = 600
@@ -362,16 +368,17 @@ lbl3.grid()
 selectTabs.grid()
 mapFrame.grid()
 statsFrame.grid()
-hSlider.grid()
-dropMenu.grid()
+hSlider.grid(row=25)
+dropMenu.grid(row=30)
 canvas.grid()
 openFile.grid(row=1, column=0, sticky="w")
 run.grid(row=1)
 navigateStat.grid(row=1, sticky="e")
-filterButton.grid()
-resetGButton.grid()
+filterButton.grid(row=35)
+resetGButton.grid(row=40)
 playButton.grid()
 stopButton.grid()
+navigateMap.grid(row=1, sticky="e")
 
 root.title('PIR Application')
 root.configure(background='white')
