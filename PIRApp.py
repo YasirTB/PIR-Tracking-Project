@@ -102,20 +102,6 @@ def update(tkn, colour):
                 canvas.itemconfig(zn51I, outline='black', fill=colour)
 
 
-index = 0
-
-
-def task(i):
-    if i == len(L):  # check whether the index larger than the length of the list.
-        return
-    resetMap()
-    tkn = L[i].split('_')
-    update(tkn)
-    root.update()
-    root.after(100, task, i + 1)  # call this function per 0.1 second
-    root.after(100, task, index)  # call after function and pass a index argument
-
-
 def selectMapTab():
     selectTabs.select(0)
     root.geometry('670x720')
@@ -179,20 +165,16 @@ def filtGraph():
     timeData, readData = dP.sensorStats(fSensors)
     plotBar(timeData, readData)
 
-
 def getNum(varNum):
     global fNum
     fNum = varNum
-
 
 def getType(varType):
     global fType
     fType = varType
 
-
 def resetGraph():
     plotBar(timeData, readData)
-
 
 def runMap():
     for i in range(len(fullOrder)):
@@ -215,7 +197,24 @@ def mapDelay(i):
     canvas.after(5, update(tknDelay2, 'red2'))
     canvas.after(10, update(tknDelay3, 'red3'))
 
+running = True
+def runMap():
+    global running
+    running = True
+    for i in range(len(fullOrder)):
+        if not running:
+            break
+        else:
+            resetMap()
+            subRun(i)
+            mapDelay(i)
+            canvas.update()
+    resetMap()
 
+def stopAnim():
+    global running
+    running = False
+    resetMap()
 # Main Screen
 root = Tk()
 
@@ -240,7 +239,7 @@ statsFrame = Frame(tabFrame2, height=800, width=750, borderwidth=1)
 openFile = Button(tabFrame1, text="Open File", font=('Helvetica', 10), command=addfile)
 run = Button(tabFrame1, text="Execute", font=('Helvetica', 10), command=runFile)
 playButton = Button(tabFrame1, text="Play", font=('Helvetica', 10), command=runMap)
-stopButton = Button(tabFrame1, text="Stop", font=('Helvetica', 10), command=resetMap)
+stopButton = Button(tabFrame1, text="Stop", font=('Helvetica', 10), command=stopAnim)
 
 # Navigate to the Stat Tab
 navigateStat = Button(tabFrame1, text="Show Stats", command=selectStatsTab)
@@ -304,23 +303,6 @@ canvas.create_window(500, 400, window=zn4_label)
 canvas.create_window(450, 475, window=zn45_label)
 canvas.create_window(350, 500, window=zn5_label)
 canvas.create_window(250, 475, window=zn51_label)
-
-L = ['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5',
-     '5', '5', '1_5', '1_5', '5', '5', '5', '5', '5', '5', '5', '5', '1', '1', '1', '1', '1', '1', '1_5', '5', '1',
-     '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1_2', '2', '1_2', '0_1', '0_1', '0_1', '0_1', '1', '1',
-     '0_1', '0', '0_1_2', '1_2', '1', '1_2', '2', '2', '2', '2', '2', '2', '2', '1', '1', '2', '2', '2', '2_3',
-     '2_3', '0_2_3', '0_2', '0_2', '0_2', '2', '2', '2', '2_3', '3', '2_3', '2', '2_3', '2_3_4', '3_4', '3', '3',
-     '3_4', '3_4', '2_3_4', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3',
-     '3', '4', '3', '3', '3_4', '4', '4', '4', '4', '3_4', '4', '4', '0_3_4', '3_4', '3', '3', '3', '3', '0', '4',
-     '0_4', '4', '4', '5', '4', '4', '4', '4', '4_5', '4_5', '4_5', '4_5', '5', '5', '5', '5', '5', '5', '0_5',
-     '0_5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5',
-     '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5',
-     '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '1_5', '5', '5', '5', '1',
-     '1_5', '0_5', '0', '0', '0', '0_1_5', '0_5', '0_5', '0_1', '0_1', '0', '1', '1_2', '0_2', '0_1', '0_1', '0_1',
-     '2', '1_2', '1', '0_1_2', '0_1_2', '0_1_2', '1_3', '3', '0', '0_2', '2', '2', '0', '0_2', '2', '2', '0_3',
-     '0_3', '0_3', '0', '0', '0', '0', '0', '3_4', '0_3_4', '0_3_4', '0', '0', '4', '5', '5', '0', '4_5', '4_5',
-     '4_5', '4', '4', '4', '4', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5',
-     '5', '5', '1']
 
 # Stats
 import tkinter as tk
