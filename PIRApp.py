@@ -142,13 +142,13 @@ def plotBar(timeD,readD):
     readDF.plot(kind='bar', legend=True, ax=axR)
 
 def filtGraph():
-    import finalDataProcess as dp
+    import finalDataProcess as dP
     import finalGraphStats as gS
 
-    fSensors = dp.initSensors()
+    fSensors = dP.initSensors()
     filtDF = gS.filterData(sensorDF,int(fNum),fType)
-    dp.calculate(filtDF, fSensors)
-    timeData, readData = dp.sensorStats(fSensors)
+    dP.calculate(filtDF, fSensors)
+    timeData, readData = gS.sensorStats(fSensors)
     plotBar(timeData, readData)
 
 def getNum(varNum):
