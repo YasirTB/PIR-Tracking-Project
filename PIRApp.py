@@ -3,7 +3,6 @@
 # User loads a txt file (output from the PIR sensors readings) to the application
 # Movement is then traced on the map provided
 # Supporting Statistics are also outlined
-import finalGraphStats
 from tkinter import *
 from tkinter import filedialog, ttk
 import sys
@@ -143,12 +142,10 @@ def plotBar(timeD,readD):
 
 def filtGraph():
     import finalDataProcess as dP
-    import finalGraphStats as gS
-
     fSensors = dP.initSensors()
-    filtDF = gS.filterData(sensorDF,int(fNum),fType)
+    filtDF = dP.filterData(sensorDF,int(fNum),fType)
     dP.calculate(filtDF, fSensors)
-    timeData, readData = gS.sensorStats(fSensors)
+    timeData, readData = dP.sensorStats(fSensors)
     plotBar(timeData, readData)
 
 def getNum(varNum):
