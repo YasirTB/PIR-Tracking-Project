@@ -14,7 +14,6 @@ def login(event):
         root.deiconify()
         top.destroy()
 
-
 def cancel():
     top.destroy()
     root.destroy()
@@ -25,125 +24,143 @@ def addfile():
     global filename
     filename = filedialog.askopenfilename(initialdir="/", title="Select File",
                                           filetypes=(("Text Files", "*.txt"), ("All files", "*.*")))
-
     label = Label(tabFrame1, text=filename).pack()
 
-
-def resetMap():
-    canvas.itemconfig(zn1, fill='white')
-    canvas.itemconfig(zn12, fill='white')
-    canvas.itemconfig(zn2, fill='white')
-    canvas.itemconfig(zn23, fill='white')
-    canvas.itemconfig(zn3, fill='white')
-    canvas.itemconfig(zn34, fill='white')
-    canvas.itemconfig(zn4, fill='white')
-    canvas.itemconfig(zn45, fill='white')
-    canvas.itemconfig(zn5, fill='white')
-    canvas.itemconfig(zn51, fill='white')
-
-    canvas.itemconfig(zn1I, fill='white')
-    canvas.itemconfig(zn12I, fill='white')
-    canvas.itemconfig(zn2I, fill='white')
-    canvas.itemconfig(zn23I, fill='white')
-    canvas.itemconfig(zn3I, fill='white')
-    canvas.itemconfig(zn34I, fill='white')
-    canvas.itemconfig(zn4I, fill='white')
-    canvas.itemconfig(zn45I, fill='white')
-    canvas.itemconfig(zn5I, fill='white')
-    canvas.itemconfig(zn51I, fill='white')
-
-
-def update(tkn, colour):
-    if len(tkn) == 1:
-        if '1' in tkn:
-            canvas.itemconfig(zn1, outline='black', fill=colour)
-        elif '2' in tkn:
-            canvas.itemconfig(zn2, outline='black', fill=colour)
-        elif '3' in tkn:
-            canvas.itemconfig(zn3, outline='black', fill=colour)
-        elif '4' in tkn:
-            canvas.itemconfig(zn4, outline='black', fill=colour)
-        elif '5' in tkn:
-            canvas.itemconfig(zn5, outline='black', fill=colour)
-    elif len(tkn) == 2:
-        if '1' in tkn and '2' in tkn:
-            canvas.itemconfig(zn12, outline='black', fill=colour)
-        elif '2' in tkn and '3' in tkn:
-            canvas.itemconfig(zn23, outline='black', fill=colour)
-        elif '3' in tkn and '4' in tkn:
-            canvas.itemconfig(zn34, outline='black', fill=colour)
-        elif '4' in tkn and '5' in tkn:
-            canvas.itemconfig(zn45, outline='black', fill=colour)
-        elif '5' in tkn and '1' in tkn:
-            canvas.itemconfig(zn51, outline='black', fill=colour)
-        elif '0' in tkn and '1' in tkn:
-            canvas.itemconfig(zn1I, outline='black', fill=colour)
-        elif '0' in tkn and '2' in tkn:
-            canvas.itemconfig(zn2I, outline='black', fill=colour)
-        elif '0' in tkn and '3' in tkn:
-            canvas.itemconfig(zn3I, outline='black', fill=colour)
-        elif '0' in tkn and '4' in tkn:
-            canvas.itemconfig(zn4I, outline='black', fill=colour)
-        elif '0' in tkn and '5' in tkn:
-            canvas.itemconfig(zn5I, outline='black', fill=colour)
-    else:
-        if '0' in tkn:
-            if '1' in tkn and '2' in tkn:
-                canvas.itemconfig(zn12I, outline='black', fill=colour)
-            elif '2' in tkn and '3' in tkn:
-                canvas.itemconfig(zn23I, outline='black', fill=colour)
-            elif '3' in tkn and '4' in tkn:
-                canvas.itemconfig(zn34I, outline='black', fill=colour)
-            elif '4' in tkn and '5' in tkn:
-                canvas.itemconfig(zn45I, outline='black', fill=colour)
-            elif '5' in tkn and '1' in tkn:
-                canvas.itemconfig(zn51I, outline='black', fill=colour)
-
-
-index = 0
-
-
-def task(i):
-    if i == len(L):  # check whether the index larger than the length of the list.
-        return
-    resetMap()
-    tkn = L[i].split('_')
-    update(tkn)
-    root.update()
-    root.after(100, task, i + 1)  # call this function per 0.1 second
-    root.after(100, task, index)  # call after function and pass a index argument
-
+# def resetMap():
+#     canvas.itemconfig(zn1, fill='white')
+#     canvas.itemconfig(zn12, fill='white')
+#     canvas.itemconfig(zn2, fill='white')
+#     canvas.itemconfig(zn23, fill='white')
+#     canvas.itemconfig(zn3, fill='white')
+#     canvas.itemconfig(zn34, fill='white')
+#     canvas.itemconfig(zn4, fill='white')
+#     canvas.itemconfig(zn45, fill='white')
+#     canvas.itemconfig(zn5, fill='white')
+#     canvas.itemconfig(zn51, fill='white')
+#
+#     canvas.itemconfig(zn1I, fill='white')
+#     canvas.itemconfig(zn12I, fill='white')
+#     canvas.itemconfig(zn2I, fill='white')
+#     canvas.itemconfig(zn23I, fill='white')
+#     canvas.itemconfig(zn3I, fill='white')
+#     canvas.itemconfig(zn34I, fill='white')
+#     canvas.itemconfig(zn4I, fill='white')
+#     canvas.itemconfig(zn45I, fill='white')
+#     canvas.itemconfig(zn5I, fill='white')
+#     canvas.itemconfig(zn51I, fill='white')
+#
+# def update(tkn, colour):
+#     if len(tkn) == 1:
+#         if '1' in tkn:
+#             canvas.itemconfig(zn1, outline='black', fill=colour)
+#         elif '2' in tkn:
+#             canvas.itemconfig(zn2, outline='black', fill=colour)
+#         elif '3' in tkn:
+#             canvas.itemconfig(zn3, outline='black', fill=colour)
+#         elif '4' in tkn:
+#             canvas.itemconfig(zn4, outline='black', fill=colour)
+#         elif '5' in tkn:
+#             canvas.itemconfig(zn5, outline='black', fill=colour)
+#     elif len(tkn) == 2:
+#         if '1' in tkn and '2' in tkn:
+#             canvas.itemconfig(zn12, outline='black', fill=colour)
+#         elif '2' in tkn and '3' in tkn:
+#             canvas.itemconfig(zn23, outline='black', fill=colour)
+#         elif '3' in tkn and '4' in tkn:
+#             canvas.itemconfig(zn34, outline='black', fill=colour)
+#         elif '4' in tkn and '5' in tkn:
+#             canvas.itemconfig(zn45, outline='black', fill=colour)
+#         elif '5' in tkn and '1' in tkn:
+#             canvas.itemconfig(zn51, outline='black', fill=colour)
+#         elif '0' in tkn and '1' in tkn:
+#             canvas.itemconfig(zn1I, outline='black', fill=colour)
+#         elif '0' in tkn and '2' in tkn:
+#             canvas.itemconfig(zn2I, outline='black', fill=colour)
+#         elif '0' in tkn and '3' in tkn:
+#             canvas.itemconfig(zn3I, outline='black', fill=colour)
+#         elif '0' in tkn and '4' in tkn:
+#             canvas.itemconfig(zn4I, outline='black', fill=colour)
+#         elif '0' in tkn and '5' in tkn:
+#             canvas.itemconfig(zn5I, outline='black', fill=colour)
+#     else:
+#         if '0' in tkn:
+#             if '1' in tkn and '2' in tkn:
+#                 canvas.itemconfig(zn12I, outline='black', fill=colour)
+#             elif '2' in tkn and '3' in tkn:
+#                 canvas.itemconfig(zn23I, outline='black', fill=colour)
+#             elif '3' in tkn and '4' in tkn:
+#                 canvas.itemconfig(zn34I, outline='black', fill=colour)
+#             elif '4' in tkn and '5' in tkn:
+#                 canvas.itemconfig(zn45I, outline='black', fill=colour)
+#             elif '5' in tkn and '1' in tkn:
+#                 canvas.itemconfig(zn51I, outline='black', fill=colour)
 
 def select():
     selectTabs.select(1)
 
-
 def runFile():
-    global sensorDF
-    global tSensors
-    global fullOrder
-    global timeData
-    global readData
     import finalDataProcess as dp
+    global sensorDF,timeData,readData
     tSensors = dp.initSensors()
     sensorDF = dp.preprocess(filename)
     fullOrder = dp.calculate(sensorDF,tSensors)
     timeData, readData = dp.sensorStats(tSensors)
-    runStats()
-    
-def runStats():
+    plotBar(timeData,readData)
+
+def plotBar(timeD,readD):
+    import tkinter as tk
+    import matplotlib.pyplot as plt
     from pandas import DataFrame
-    
+    from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+    #Clear the graphs before plotting a new one
+    for widget in statsFrame.winfo_children():
+        widget.destroy()
+
     # Creating dataframes for the readings and time data
-    dTime = {'Sensor': ['0', '1', '2', '3', '4', '5'], 'Duration': timeData}
-    dRead = {'Sensor': ['0', '1', '2', '3', '4', '5'], 'Count': readData}
+    dTime = {'Sensor': ['0', '1', '2', '3', '4', '5'], 'Duration': timeD}
+    dRead = {'Sensor': ['0', '1', '2', '3', '4', '5'], 'Count': readD}
 
     timeDF = DataFrame(dTime, columns=['Sensor', 'Duration'])
     readDF = DataFrame(dRead, columns=['Sensor', 'Count'])
+
+    timeFig = plt.Figure(figsize=(4, 4), dpi=75)
+    readFig = plt.Figure(figsize=(4, 4), dpi=75)
+
+    axT = timeFig.add_subplot(111)
+    barT = FigureCanvasTkAgg(timeFig, statsFrame)
+    barT.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH)
+    axT.set_title('Time spent by the user on each zone')
     timeDF = timeDF[['Sensor', 'Duration']].groupby('Sensor').sum()
-    timeDF.plot(kind='bar', legend=True, ax=ax1)
+    timeDF.plot(kind='bar', legend=True, ax=axT)
+
+    axR = readFig.add_subplot(111)
+    barR = FigureCanvasTkAgg(readFig, statsFrame)
+    barR.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH)
+    axR.set_title('Sensor read')
     readDF = readDF[['Sensor', 'Count']].groupby('Sensor').sum()
-    readDF.plot(kind='bar', legend=True, ax=ax2)
+    readDF.plot(kind='bar', legend=True, ax=axR)
+
+def filtGraph():
+    import finalDataProcess as dp
+    import finalGraphStats as gS
+
+    fSensors = dp.initSensors()
+    filtDF = gS.filterData(sensorDF,int(fNum),fType)
+    dp.calculate(filtDF, fSensors)
+    timeData, readData = dp.sensorStats(fSensors)
+    plotBar(timeData, readData)
+
+def getNum(varNum):
+    global fNum
+    fNum = varNum
+
+def getType(varType):
+    global fType
+    fType = varType
+
+def resetGraph():
+    plotBar(timeData, readData)
 
 # Main Screen
 root = Tk()
@@ -175,8 +192,11 @@ navigateStat = Button(tabFrame1, text="Show Stats", command=select)
 clicked = StringVar()
 clicked.set("Select Time Unit")
 
-hSlider = Scale(tabFrame2, from_= 0, to=120, orient=HORIZONTAL)
-dropMenu = OptionMenu(tabFrame2, clicked, "Hours", "Minutes", "Seconds")
+hSlider = Scale(tabFrame2, from_= 0, to=60, orient=HORIZONTAL,command = getNum)
+dropMenu = OptionMenu(tabFrame2, clicked, "Hours", "Minutes", "Seconds", command=getType)
+
+filterButton = Button(tabFrame2, text = 'Filter',command = filtGraph)
+resetGButton = Button(tabFrame2, text = 'Reset',command = resetGraph)
 
 cWidth = 660
 cHeight = 600
@@ -251,21 +271,20 @@ L = ['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', '5', '5', '5', 
 ###STATS
 import tkinter as tk
 import matplotlib.pyplot as plt
-from pandas import DataFrame
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+timeFig = plt.Figure(figsize=(4, 4), dpi=75)
+readFig = plt.Figure(figsize=(4, 4), dpi=75)
+axT = timeFig.add_subplot(111)
+barT = FigureCanvasTkAgg(timeFig, statsFrame)
+barT.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH)
+axT.set_title('Time spent by the user on each zone')
+
+axR = readFig.add_subplot(111)
+barR = FigureCanvasTkAgg(readFig, statsFrame)
+barR.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH)
+axR.set_title('Sensor read')
 
 
-figure1 = plt.Figure(figsize=(4, 4), dpi=75)
-ax1 = figure1.add_subplot(111)
-bar1 = FigureCanvasTkAgg(figure1, statsFrame)
-bar1.get_tk_widget().pack(side = tk.LEFT,fill = tk.BOTH)
-ax1.set_title('Time spent by the user on each zone')
-
-figure2 = plt.Figure(figsize=(4, 4), dpi=75)
-ax2 = figure2.add_subplot(111)
-bar2 = FigureCanvasTkAgg(figure2, statsFrame)
-bar2.get_tk_widget().pack(side = tk.RIGHT,fill = tk.BOTH)
-ax2.set_title('Sensor read')
 
 # Login Screen Config
 top = Toplevel()
@@ -300,7 +319,8 @@ canvas.pack()
 openFile.pack()
 run.pack()
 navigateStat.pack()
-
+filterButton.pack()
+resetGButton.pack()
 root.title('main screen')
 root.configure(background='white')
 root.geometry('660x720')
