@@ -89,3 +89,30 @@ def summary(sensors):
               'seconds.')
         totalFreq += i.frequency
     return totalFreq
+
+def filterData(tSensors, num, type):
+    lastIndex = len(tSensors)
+    filtIndex = 0
+    # converting numbers into seconds, multplied by 10 because it takes 10lines for each second
+    if type == 'Hours':
+        filtIndex = num * 36000
+    elif type == 'Minutes':
+        filtIndex = num * 600
+    elif type == 'Seconds':
+        filtIndex = num * 10
+
+    if filtIndex > lastIndex:
+        filtIndex = 0
+
+    firstIndex = lastIndex - filtIndex
+    filteredArr = tSensors.copy()  # Copy the original dataframe
+    filteredArr = filteredArr.iloc[firstIndex:lastIndex, :]  # slicing the new dataframe
+    return filteredArr
+
+def sensorStats(tSensors):
+    timePerSen = []
+    readPerSen = []
+    for i in tSensors:
+        timePerSen.append(i.elapsedTime)
+        readPerSen.append(i.frequency)
+    return timePerSen,readPerSen
