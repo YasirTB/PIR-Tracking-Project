@@ -74,7 +74,8 @@ def calculate(arr, tSensors):
         else:
             fullOrder.append(fullOrder[len(fullOrder)-1])
             idle += currentElapsedTime
-    return activeTime, totalTime, fullOrder
+    # return activeTime, totalTime, fullOrder
+    return fullOrder
 
 def initSensors():
     tSensors = []
