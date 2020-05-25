@@ -44,7 +44,7 @@ def filterData(tSensors, num, type):
 
     if filtIndex > lastIndex:
         filtIndex = 0
-        
+
     firstIndex = lastIndex - filtIndex
     filteredArr = tSensors.copy() #Copy the original dataframe
     filteredArr=filteredArr.iloc[firstIndex:lastIndex,:] #slicing the new dataframe
