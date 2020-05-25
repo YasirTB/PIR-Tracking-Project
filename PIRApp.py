@@ -165,6 +165,7 @@ def runMap():
         subRun(i)
         mapDelay(i)
         canvas.update()
+    resetMap()
 
 def subRun(i):
     tkn = fullOrder[i].split(',')
@@ -199,7 +200,7 @@ statsFrame = Frame(tabFrame2, height=800, width=750, borderwidth=1)
 openFile = Button(tabFrame1, text="Open File", font=('Helvetica', 10), command=addfile)
 run = Button(tabFrame1, text="Execute", font=('Helvetica', 10), command=runFile)
 playButton = Button(tabFrame1, text="Play", font=('Helvetica', 10), command = runMap)
-stopButton = Button(tabFrame1, text="Stop", font=('Helvetica', 10), command=runMap)
+stopButton = Button(tabFrame1, text="Stop", font=('Helvetica', 10), command=resetMap)
 
 # Navigate to the Stat Tab
 navigateStat = Button(tabFrame1, text="Show Stats", command=select)
@@ -265,25 +266,6 @@ canvas.create_window(450, 475, window=zn45_label)
 canvas.create_window(350, 500, window=zn5_label)
 canvas.create_window(250, 475, window=zn51_label)
 
-L = ['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5',
-     '5', '5', '1_5', '1_5', '5', '5', '5', '5', '5', '5', '5', '5', '1', '1', '1', '1', '1', '1', '1_5', '5', '1',
-     '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1_2', '2', '1_2', '0_1', '0_1', '0_1', '0_1', '1', '1',
-     '0_1', '0', '0_1_2', '1_2', '1', '1_2', '2', '2', '2', '2', '2', '2', '2', '1', '1', '2', '2', '2', '2_3',
-     '2_3', '0_2_3', '0_2', '0_2', '0_2', '2', '2', '2', '2_3', '3', '2_3', '2', '2_3', '2_3_4', '3_4', '3', '3',
-     '3_4', '3_4', '2_3_4', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3', '3',
-     '3', '4', '3', '3', '3_4', '4', '4', '4', '4', '3_4', '4', '4', '0_3_4', '3_4', '3', '3', '3', '3', '0', '4',
-     '0_4', '4', '4', '5', '4', '4', '4', '4', '4_5', '4_5', '4_5', '4_5', '5', '5', '5', '5', '5', '5', '0_5',
-     '0_5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5',
-     '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5',
-     '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '1_5', '5', '5', '5', '1',
-     '1_5', '0_5', '0', '0', '0', '0_1_5', '0_5', '0_5', '0_1', '0_1', '0', '1', '1_2', '0_2', '0_1', '0_1', '0_1',
-     '2', '1_2', '1', '0_1_2', '0_1_2', '0_1_2', '1_3', '3', '0', '0_2', '2', '2', '0', '0_2', '2', '2', '0_3',
-     '0_3', '0_3', '0', '0', '0', '0', '0', '3_4', '0_3_4', '0_3_4', '0', '0', '4', '5', '5', '0', '4_5', '4_5',
-     '4_5', '4', '4', '4', '4', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5', '5',
-     '5', '5', '1']
-
-
-
 ###STATS
 import tkinter as tk
 import matplotlib.pyplot as plt
@@ -337,7 +319,8 @@ run.pack()
 # navigateStat.pack()
 filterButton.pack()
 resetGButton.pack()
-stopButton.pack()
+playButton.pack()
+# stopButton.pack()
 root.title('main screen')
 root.configure(background='white')
 root.geometry('660x720')
