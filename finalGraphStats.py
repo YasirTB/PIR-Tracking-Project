@@ -4,6 +4,7 @@ def plotBar(timeData, readData):
     import matplotlib.pyplot as plt
     from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
+    #Creating dataframes for the readings and time data
     dTime = {'Sensor': ['0', '1', '2', '3', '4', '5'], 'Duration': timeData}
     dRead = {'Sensor': ['0', '1', '2', '3', '4', '5'], 'Count': readData}
 
@@ -30,16 +31,29 @@ def plotBar(timeData, readData):
 
     root.mainloop()
 
-def filterData(tSensors, num):
+def filterData(tSensors, num, type):
     lastIndex = len(tSensors)
-    firstIndex= lastIndex - (num*10)
-    filteredArr = tSensors.copy() #Slice the dataframe
-    filteredArr=filteredArr.iloc[firstIndex:lastIndex,:]
+    filtIndex = 0
+    #converting numbers into seconds, multplied by 10 because it takes 10lines for each second
+    if type == 'Hours':
+        filtIndex = num * 36000
+    elif type == 'Minutes':
+        filtIndex = num * 600
+    elif type == 'Seconds':
+        filtIndex = num * 10
+
+    if filtIndex > lastIndex:
+        filtIndex = 0
+        
+    firstIndex = lastIndex - filtIndex
+    filteredArr = tSensors.copy() #Copy the original dataframe
+    filteredArr=filteredArr.iloc[firstIndex:lastIndex,:] #slicing the new dataframe
     return filteredArr
 
 def sensorStats(tSensors):
     timePerSen = []
     readPerSen = []
+    #Appends time and readings for each sensor into separate arrays
     for i in tSensors:
         timePerSen.append(i.elapsedTime)
         readPerSen.append(i.frequency)
