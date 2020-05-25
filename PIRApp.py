@@ -25,81 +25,81 @@ def addfile():
                                           filetypes=(("Text Files", "*.txt"), ("All files", "*.*")))
     label = Label(tabFrame1, text=filename).pack()
 
-# def resetMap():
-#     canvas.itemconfig(zn1, fill='white')
-#     canvas.itemconfig(zn12, fill='white')
-#     canvas.itemconfig(zn2, fill='white')
-#     canvas.itemconfig(zn23, fill='white')
-#     canvas.itemconfig(zn3, fill='white')
-#     canvas.itemconfig(zn34, fill='white')
-#     canvas.itemconfig(zn4, fill='white')
-#     canvas.itemconfig(zn45, fill='white')
-#     canvas.itemconfig(zn5, fill='white')
-#     canvas.itemconfig(zn51, fill='white')
-#
-#     canvas.itemconfig(zn1I, fill='white')
-#     canvas.itemconfig(zn12I, fill='white')
-#     canvas.itemconfig(zn2I, fill='white')
-#     canvas.itemconfig(zn23I, fill='white')
-#     canvas.itemconfig(zn3I, fill='white')
-#     canvas.itemconfig(zn34I, fill='white')
-#     canvas.itemconfig(zn4I, fill='white')
-#     canvas.itemconfig(zn45I, fill='white')
-#     canvas.itemconfig(zn5I, fill='white')
-#     canvas.itemconfig(zn51I, fill='white')
-#
-# def update(tkn, colour):
-#     if len(tkn) == 1:
-#         if '1' in tkn:
-#             canvas.itemconfig(zn1, outline='black', fill=colour)
-#         elif '2' in tkn:
-#             canvas.itemconfig(zn2, outline='black', fill=colour)
-#         elif '3' in tkn:
-#             canvas.itemconfig(zn3, outline='black', fill=colour)
-#         elif '4' in tkn:
-#             canvas.itemconfig(zn4, outline='black', fill=colour)
-#         elif '5' in tkn:
-#             canvas.itemconfig(zn5, outline='black', fill=colour)
-#     elif len(tkn) == 2:
-#         if '1' in tkn and '2' in tkn:
-#             canvas.itemconfig(zn12, outline='black', fill=colour)
-#         elif '2' in tkn and '3' in tkn:
-#             canvas.itemconfig(zn23, outline='black', fill=colour)
-#         elif '3' in tkn and '4' in tkn:
-#             canvas.itemconfig(zn34, outline='black', fill=colour)
-#         elif '4' in tkn and '5' in tkn:
-#             canvas.itemconfig(zn45, outline='black', fill=colour)
-#         elif '5' in tkn and '1' in tkn:
-#             canvas.itemconfig(zn51, outline='black', fill=colour)
-#         elif '0' in tkn and '1' in tkn:
-#             canvas.itemconfig(zn1I, outline='black', fill=colour)
-#         elif '0' in tkn and '2' in tkn:
-#             canvas.itemconfig(zn2I, outline='black', fill=colour)
-#         elif '0' in tkn and '3' in tkn:
-#             canvas.itemconfig(zn3I, outline='black', fill=colour)
-#         elif '0' in tkn and '4' in tkn:
-#             canvas.itemconfig(zn4I, outline='black', fill=colour)
-#         elif '0' in tkn and '5' in tkn:
-#             canvas.itemconfig(zn5I, outline='black', fill=colour)
-#     else:
-#         if '0' in tkn:
-#             if '1' in tkn and '2' in tkn:
-#                 canvas.itemconfig(zn12I, outline='black', fill=colour)
-#             elif '2' in tkn and '3' in tkn:
-#                 canvas.itemconfig(zn23I, outline='black', fill=colour)
-#             elif '3' in tkn and '4' in tkn:
-#                 canvas.itemconfig(zn34I, outline='black', fill=colour)
-#             elif '4' in tkn and '5' in tkn:
-#                 canvas.itemconfig(zn45I, outline='black', fill=colour)
-#             elif '5' in tkn and '1' in tkn:
-#                 canvas.itemconfig(zn51I, outline='black', fill=colour)
+def resetMap():
+    canvas.itemconfig(zn1, fill='white')
+    canvas.itemconfig(zn12, fill='white')
+    canvas.itemconfig(zn2, fill='white')
+    canvas.itemconfig(zn23, fill='white')
+    canvas.itemconfig(zn3, fill='white')
+    canvas.itemconfig(zn34, fill='white')
+    canvas.itemconfig(zn4, fill='white')
+    canvas.itemconfig(zn45, fill='white')
+    canvas.itemconfig(zn5, fill='white')
+    canvas.itemconfig(zn51, fill='white')
+
+    canvas.itemconfig(zn1I, fill='white')
+    canvas.itemconfig(zn12I, fill='white')
+    canvas.itemconfig(zn2I, fill='white')
+    canvas.itemconfig(zn23I, fill='white')
+    canvas.itemconfig(zn3I, fill='white')
+    canvas.itemconfig(zn34I, fill='white')
+    canvas.itemconfig(zn4I, fill='white')
+    canvas.itemconfig(zn45I, fill='white')
+    canvas.itemconfig(zn5I, fill='white')
+    canvas.itemconfig(zn51I, fill='white')
+
+def update(tkn, colour):
+    if len(tkn) == 1:
+        if '1' in tkn:
+            canvas.itemconfig(zn1, outline='black', fill=colour)
+        elif '2' in tkn:
+            canvas.itemconfig(zn2, outline='black', fill=colour)
+        elif '3' in tkn:
+            canvas.itemconfig(zn3, outline='black', fill=colour)
+        elif '4' in tkn:
+            canvas.itemconfig(zn4, outline='black', fill=colour)
+        elif '5' in tkn:
+            canvas.itemconfig(zn5, outline='black', fill=colour)
+    elif len(tkn) == 2:
+        if '1' in tkn and '2' in tkn:
+            canvas.itemconfig(zn12, outline='black', fill=colour)
+        elif '2' in tkn and '3' in tkn:
+            canvas.itemconfig(zn23, outline='black', fill=colour)
+        elif '3' in tkn and '4' in tkn:
+            canvas.itemconfig(zn34, outline='black', fill=colour)
+        elif '4' in tkn and '5' in tkn:
+            canvas.itemconfig(zn45, outline='black', fill=colour)
+        elif '5' in tkn and '1' in tkn:
+            canvas.itemconfig(zn51, outline='black', fill=colour)
+        elif '0' in tkn and '1' in tkn:
+            canvas.itemconfig(zn1I, outline='black', fill=colour)
+        elif '0' in tkn and '2' in tkn:
+            canvas.itemconfig(zn2I, outline='black', fill=colour)
+        elif '0' in tkn and '3' in tkn:
+            canvas.itemconfig(zn3I, outline='black', fill=colour)
+        elif '0' in tkn and '4' in tkn:
+            canvas.itemconfig(zn4I, outline='black', fill=colour)
+        elif '0' in tkn and '5' in tkn:
+            canvas.itemconfig(zn5I, outline='black', fill=colour)
+    else:
+        if '0' in tkn:
+            if '1' in tkn and '2' in tkn:
+                canvas.itemconfig(zn12I, outline='black', fill=colour)
+            elif '2' in tkn and '3' in tkn:
+                canvas.itemconfig(zn23I, outline='black', fill=colour)
+            elif '3' in tkn and '4' in tkn:
+                canvas.itemconfig(zn34I, outline='black', fill=colour)
+            elif '4' in tkn and '5' in tkn:
+                canvas.itemconfig(zn45I, outline='black', fill=colour)
+            elif '5' in tkn and '1' in tkn:
+                canvas.itemconfig(zn51I, outline='black', fill=colour)
 
 def select():
     selectTabs.select(1)
 
 def runFile():
     import finalDataProcess as dp
-    global sensorDF,timeData,readData
+    global sensorDF,timeData,readData,fullOrder
     tSensors = dp.initSensors()
     sensorDF = dp.preprocess(filename)
     fullOrder = dp.calculate(sensorDF,tSensors)
@@ -159,6 +159,22 @@ def getType(varType):
 def resetGraph():
     plotBar(timeData, readData)
 
+def runMap():
+    for i in range(len(fullOrder)):
+        resetMap()
+        subRun(i)
+        mapDelay(i)
+        canvas.update()
+
+def subRun(i):
+    tkn = fullOrder[i].split(',')
+    canvas.after(100, update(tkn, 'red'))
+def mapDelay(i):
+    tknDelay2 = fullOrder[i - 1].split(',')
+    tknDelay3 = fullOrder[i - 2].split(',')
+
+    canvas.after(5, update(tknDelay2, 'red2'))
+    canvas.after(10, update(tknDelay3, 'red3'))
 # Main Screen
 root = Tk()
 
@@ -182,6 +198,8 @@ statsFrame = Frame(tabFrame2, height=800, width=750, borderwidth=1)
 # Buttons on the tab 1
 openFile = Button(tabFrame1, text="Open File", font=('Helvetica', 10), command=addfile)
 run = Button(tabFrame1, text="Execute", font=('Helvetica', 10), command=runFile)
+playButton = Button(tabFrame1, text="Play", font=('Helvetica', 10), command = runMap)
+stopButton = Button(tabFrame1, text="Stop", font=('Helvetica', 10), command=runMap)
 
 # Navigate to the Stat Tab
 navigateStat = Button(tabFrame1, text="Show Stats", command=select)
@@ -197,6 +215,7 @@ resetGButton = Button(tabFrame2, text = 'Reset',command = resetGraph)
 
 cWidth = 660
 cHeight = 600
+global canvas
 canvas = Canvas(mapFrame, width=cWidth, height=cHeight)
 
 # Outer Zones
@@ -315,9 +334,10 @@ dropMenu.pack()
 canvas.pack()
 openFile.pack()
 run.pack()
-navigateStat.pack()
+# navigateStat.pack()
 filterButton.pack()
 resetGButton.pack()
+stopButton.pack()
 root.title('main screen')
 root.configure(background='white')
 root.geometry('660x720')
