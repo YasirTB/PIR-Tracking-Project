@@ -236,10 +236,10 @@ mapFrame = Frame(tabFrame1, height=800, width=750, borderwidth=1)
 statsFrame = Frame(tabFrame2, height=800, width=750, borderwidth=1)
 
 # Buttons on the tab 1
-openFile = Button(tabFrame1, text="Open File", font=('Helvetica', 10), command=addfile)
-run = Button(tabFrame1, text="Execute", font=('Helvetica', 10), command=runFile)
-playButton = Button(tabFrame1, text="Play", font=('Helvetica', 10), command=runMap)
-stopButton = Button(tabFrame1, text="Stop", font=('Helvetica', 10), command=stopAnim)
+openFile = Button(tabFrame1, text="Open File", command=addfile)
+run = Button(tabFrame1, text="Upload", command=runFile)
+playButton = Button(tabFrame1, text="Play", command=runMap)
+stopButton = Button(tabFrame1, text="Stop", command=stopAnim)
 
 # Navigate to the Stat Tab
 navigateStat = Button(tabFrame1, text="Show Stats", command=selectStatsTab)
@@ -354,12 +354,12 @@ hSlider.grid(row=25)
 dropMenu.grid(row=30)
 canvas.grid()
 openFile.grid(row=1, column=0, sticky="w")
-run.grid(row=1)
+run.grid(row=1, ipadx = 3) #upload button... Map Layout
 navigateStat.grid(row=1, sticky="e")
-filterButton.grid(row=35)
-resetGButton.grid(row=40)
-playButton.grid()
-stopButton.grid()
+filterButton.grid(row=35, ipadx = 10)
+resetGButton.grid(row=40, ipadx = 8)
+playButton.grid(ipadx = 12) #Play button... Map Layout
+stopButton.grid(ipadx = 10) #Stop button... Map Layout
 navigateMap.grid(row=1, sticky="e")
 
 root.title('PIR Application')

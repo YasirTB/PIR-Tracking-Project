@@ -20,10 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c47476c9-eaba-4d66-af49-c7016cd18775" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mapLayout.py" beforeDir="false" afterPath="$PROJECT_DIR$/mapLayout.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PIRApp.py" beforeDir="false" afterPath="$PROJECT_DIR$/PIRApp.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +44,7 @@
     <property name="last_opened_file_path" value="$USER_HOME$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.mapLayout">
+  <component name="RunManager" selected="Python.PIRApp">
     <configuration name="PIRApp" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="PIR-Tracking-Project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -112,11 +110,14 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.PIRApp" />
         <item itemvalue="Python.mapLayout" />
         <item itemvalue="Python.dataProcessing" />
-        <item itemvalue="Python.PIRApp" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -135,22 +136,22 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="526" y="151" key="#mapLayout/0.23.1680.1027@0.23.1680.1027" timestamp="1587442682936" />
-    <state width="829" height="166" key="GridCell.Tab.0.bottom" timestamp="1588297956497">
+    <state width="1381" height="165" key="GridCell.Tab.0.bottom" timestamp="1590568618782">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="829" height="166" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1588297956497" />
-    <state width="829" height="166" key="GridCell.Tab.0.center" timestamp="1588297956496">
+    <state width="1381" height="165" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1590568618782" />
+    <state width="1381" height="165" key="GridCell.Tab.0.center" timestamp="1590568618782">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="829" height="166" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1588297956496" />
-    <state width="829" height="166" key="GridCell.Tab.0.left" timestamp="1588297956496">
+    <state width="1381" height="165" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1590568618782" />
+    <state width="1381" height="165" key="GridCell.Tab.0.left" timestamp="1590568618781">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="829" height="166" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1588297956496" />
-    <state width="829" height="166" key="GridCell.Tab.0.right" timestamp="1588297956496">
+    <state width="1381" height="165" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1590568618781" />
+    <state width="1381" height="165" key="GridCell.Tab.0.right" timestamp="1590568618782">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="829" height="166" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1588297956496" />
+    <state width="1381" height="165" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1590568618782" />
     <state x="341" y="175" key="SettingsEditor" timestamp="1587442697708">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
