@@ -8,8 +8,6 @@ import finalDataProcess
 from tkinter import *
 from tkinter import filedialog, ttk
 import sys
-import time
-
 
 def login(event):
     if entry1.get() == 'aut' and entry2.get() == 'pass':
@@ -157,7 +155,6 @@ def plotBar(timeD, readD):
 
     statsLabel.config(text="The following graphs present the user's movement.")
     statsLabel.grid
-
 
 def filtGraph():
     import finalDataProcess as dP
