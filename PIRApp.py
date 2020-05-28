@@ -99,7 +99,6 @@ def update(tkn, colour):
             elif '5' in tkn and '1' in tkn:
                 canvas.itemconfig(zn51I, outline='black', fill=colour)
 
-
 def selectMapTab():
     selectTabs.select(0)
     root.geometry('670x720')
