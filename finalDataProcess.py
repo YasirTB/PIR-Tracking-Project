@@ -4,30 +4,34 @@ class Sensor:
         self.elapsedTime = 0
         self.frequency = 0
 
-    def updateFreq(self):
+    def updateFreq(self): #Increments the frequency count by 1
         self.frequency += 1
 
-    def updateTime(self, elapsedTime):
+    def updateTime(self, elapsedTime):  #Increments the elapsed time by adding the given parameter
         self.elapsedTime += elapsedTime
 
 def preprocess(fileName):
     import pandas as pd
-    df = open(fileName, "r")
-    lines = df.readlines()
+    df = open(fileName, "r") #Reads the txt file
+    lines = df.readlines() #Creates an list of lines from the txt file
     df.close()
 
-    for index, line in enumerate(lines):
+    for index, line in enumerate(lines): #iterate every line of the txt file
         readings = []
+        #Clean up the line but removing all the spaces and separating each value based on commas
         lines[index] = line.strip()
         strToken = lines[index].replace(' -> ', '')
         strToken = strToken.split(',')
+
+        #Slice the strToken list so that we only have the sensor readings
         sensorList = strToken[3:9]
         for data in sensorList:
             dataToken = data.split(':')
             readings.append(dataToken[1])
-        readings.insert(0, strToken[0])
+        readings.insert(0, strToken[0]) #Appends the time with the sensor readings
         lines[index] = readings
 
+    #Converting the time ands sensor readings into a dataframe
     df_result = pd.DataFrame(columns=('Time', '0', '1', '2', '3', '4', '5'))
     i = 0
     for line in lines:
@@ -43,6 +47,7 @@ def calculate(arr, tSensors):
     activeTime = 0
     totalTime = 0
     idle = 0
+    #This for-loop iterates through the time readings and calculates the time duration between every reading
     for index, line in arr.iterrows():
         fmt = '%H:%M:%S.%f'
         time = datetime.strptime(line[0], fmt)
@@ -55,12 +60,15 @@ def calculate(arr, tSensors):
             currentElapsedTime = (newTime - oldTime)
             oldTime = newTime
         totalTime += currentElapsedTime # Adding current time duration to the total time duration
+
+
         reading = line[1:7] # Slicing the data for the sensor readings into a new list
         order = ''
-        for index, input in enumerate(reading): #Iterates through the 6 sensor readings
-            if float(input) < 1.7 or float(input) > 2.5: # If the reading is below 1.7 or above 2.5, the sensor reads that the user is active
+        for index, input in enumerate(reading): #Iterates through the 6 sensor readings and finds the readings that exceeds our thresholds
+            if float(input) < 1.40 or float(input) > 2.35: # If the reading is below 1.7 or above 2.5, the sensor reads that the user is active
                 tSensors[index - 1].updateFreq()
                 tSensors[index - 1].updateTime(currentElapsedTime) # Accumulating the time spent in the sensor
+                #Creates a string of sensors that are active
                 if len(order) == 0:
                     order += str(index)
                 else:
@@ -83,18 +91,10 @@ def initSensors():
         tSensors.append(Sensor(i))
     return tSensors
 
-def summary(sensors):
-    totalFreq = 0
-    for i in sensors:
-        print('The user has been in zone', round(i.frequency, 2), 'times for', round(i.elapsedTime, 2),
-              'seconds.')
-        totalFreq += i.frequency
-    return totalFreq
-
 def filterData(tSensors, num, type):
     lastIndex = len(tSensors)
     filtIndex = 0
-    # converting numbers into seconds, multplied by 10 because it takes 10lines for each second
+    # converting numbers into seconds, multplied by 10 because it takes 10 lines for each second
     if type == 'Hours':
         filtIndex = num * 36000
     elif type == 'Minutes':
@@ -102,9 +102,9 @@ def filterData(tSensors, num, type):
     elif type == 'Seconds':
         filtIndex = num * 10
 
+    #If the filtering value exceeds the dataframe, no data will show up
     if filtIndex > lastIndex:
         filtIndex = 0
-
     firstIndex = lastIndex - filtIndex
     filteredArr = tSensors.copy()  # Copy the original dataframe
     filteredArr = filteredArr.iloc[firstIndex:lastIndex, :]  # slicing the new dataframe
@@ -113,7 +113,7 @@ def filterData(tSensors, num, type):
 def sensorStats(tSensors):
     timePerSen = []
     readPerSen = []
-    for i in tSensors:
+    for i in tSensors: #Iterates through every sensor and appends the time and read count to their respectively lists
         timePerSen.append(i.elapsedTime)
         readPerSen.append(i.frequency)
     return timePerSen,readPerSen
