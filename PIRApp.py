@@ -22,14 +22,12 @@ def cancel():
     root.destroy()
     sys.exit()
 
-
 def addfile():
     global filename
     filename = filedialog.askopenfilename(initialdir="/", title="Select File",
                                           filetypes=(("Text Files", "*.txt"), ("All files", "*.*")))
-
-    label = Label(tabFrame1, text=filename).grid()
-
+    fileLabel.configure(text=filename)
+    fileLabel.grid()
 
 def resetMap():
     canvas.itemconfig(zn1, fill='white')
@@ -120,6 +118,8 @@ def runFile():
     fullOrder = dp.calculate(sensorDF, tSensors)
     timeData, readData = dp.sensorStats(tSensors)
     plotBar(timeData, readData)
+    playButton.config(text="Play")
+    playButton.update()
 
 
 def plotBar(timeD, readD):
@@ -156,6 +156,9 @@ def plotBar(timeD, readD):
     readDF = readDF[['Sensor', 'Count']].groupby('Sensor').sum()
     readDF.plot(kind='bar', legend=True, ax=axR)
 
+    statsLabel.config(text="The following graphs present the user's movement.")
+    statsLabel.grid
+
 
 def filtGraph():
     import finalDataProcess as dP
@@ -164,6 +167,9 @@ def filtGraph():
     dP.calculate(filtDF, fSensors)
     timeData, readData = dP.sensorStats(fSensors)
     plotBar(timeData, readData)
+    updateStr = "The following graphs present the last "+ str(fNum) + " " + str(fType)+ " of the user's movement."
+    statsLabel.config(text = updateStr)
+    statsLabel.grid()
 
 def getNum(varNum):
     global fNum
@@ -175,8 +181,12 @@ def getType(varType):
 
 def resetGraph():
     plotBar(timeData, readData)
+    hSlider.set(0)
+    statsLabel.config(text = "The following graphs present the user's movement.")
+    statsLabel.grid
 
 def runMap():
+
     for i in range(len(fullOrder)):
         resetMap()
         subRun(i)
@@ -187,7 +197,7 @@ def runMap():
 
 def subRun(i):
     tkn = fullOrder[i].split(',')
-    canvas.after(100, update(tkn, 'red'))
+    canvas.after(85, update(tkn, 'red'))
 
 
 def mapDelay(i):
@@ -201,6 +211,8 @@ running = True
 def runMap():
     global running
     running = True
+    playButton.config(text="Playing")
+    playButton.update()
     for i in range(len(fullOrder)):
         if not running:
             break
@@ -210,6 +222,8 @@ def runMap():
             mapDelay(i)
             canvas.update()
     resetMap()
+    playButton.config(text="Replay")
+    playButton.update()
 
 def stopAnim():
     global running
@@ -240,7 +254,7 @@ openFile = Button(tabFrame1, text="Open File", command=addfile)
 run = Button(tabFrame1, text="Upload", command=runFile)
 playButton = Button(tabFrame1, text="Play", command=runMap)
 stopButton = Button(tabFrame1, text="Stop", command=stopAnim)
-
+fileLabel = Label(tabFrame1,text = "No file has been selected.")
 # Navigate to the Stat Tab
 navigateStat = Button(tabFrame1, text="Show Stats", command=selectStatsTab)
 
@@ -252,7 +266,7 @@ dropMenu = OptionMenu(tabFrame2, clicked, "Hours", "Minutes", "Seconds", command
 filterButton = Button(tabFrame2, text='Filter', command=filtGraph)
 resetGButton = Button(tabFrame2, text='Reset', command=resetGraph)
 navigateMap = Button(tabFrame2, text="Return to Map", command=selectMapTab)
-
+statsLabel = Label(tabFrame2,text = "The following graphs present the user's movement.")
 cWidth = 660
 cHeight = 600
 canvas = Canvas(mapFrame, width=cWidth, height=cHeight)
@@ -316,10 +330,11 @@ barT = FigureCanvasTkAgg(timeFig, statsFrame)
 barT.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH)
 axT.set_title('Time spent by the user on each zone')
 
+
 axR = readFig.add_subplot(111)
 barR = FigureCanvasTkAgg(readFig, statsFrame)
 barR.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH)
-axR.set_title('Sensor read')
+axR.set_title('Sensor read count')
 
 # Login Screen Config
 top = Toplevel()
